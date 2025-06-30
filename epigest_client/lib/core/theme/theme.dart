@@ -48,7 +48,7 @@ abstract final class AppTheme {
       bottomNavigationBarMutedUnselectedIcon: true,
       navigationBarIndicatorSchemeColor: SchemeColor.tertiaryContainer,
       navigationBarIndicatorOpacity: 0.50,
-      navigationBarLabelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+      navigationBarLabelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
       navigationRailMutedUnselectedLabel: true,
       navigationRailMutedUnselectedIcon: true,
       navigationRailUseIndicator: true,
