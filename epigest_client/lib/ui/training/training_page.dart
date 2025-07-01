@@ -1,3 +1,4 @@
+import 'package:epigest_client/ui/training/widgets/training_dialog_widget.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatefulWidget {
@@ -10,20 +11,20 @@ class TrainingPage extends StatefulWidget {
 class _TrainingPageState extends State<TrainingPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(width: 16),
-            Text(
-              'Seus Treinamentos',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        SingleChildScrollView(
-          child: ListView.builder(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 16),
+              Text(
+                'Seus Treinamentos',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          ListView.builder(
             itemCount: 5,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -129,7 +130,12 @@ class _TrainingPageState extends State<TrainingPage> {
                                 ),
                               ),
                               OutlinedButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const TrainingDialogWidget(),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(50, 35),
                                   foregroundColor: Theme.of(context).colorScheme.tertiaryContainer,
@@ -155,8 +161,8 @@ class _TrainingPageState extends State<TrainingPage> {
               );
             },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

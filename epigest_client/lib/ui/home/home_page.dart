@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   static const List<Widget> _widgetOptions = [
     EpiListPage(),
-    FichaEpiPage(),
+    // FichaEpiPage(),
     DocumentsPage(),
     TrainingPage(),
   ];
@@ -35,10 +35,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.construction_sharp),
             label: 'EPIs',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.assignment_turned_in),
-            label: 'Ficha de EPI',
-          ),
+          // NavigationDestination(
+          //   icon: Icon(Icons.assignment_turned_in),
+          //   label: 'Ficha de EPI',
+          // ),
           NavigationDestination(
             icon: Icon(Icons.edit_document),
             label: 'Documentos',
