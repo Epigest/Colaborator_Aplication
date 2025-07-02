@@ -304,8 +304,9 @@ class _EpiListPageState extends State<EpiListPage> {
                             alignment: Alignment.bottomRight,
                             child: OutlinedButton.icon(
                               onPressed: () {
-                                Routefly.push(
+                                Routefly.pushNavigate(
                                   routePaths.epi.epiRequest,
+                                  arguments: {'epi': epi}
                                 );
                               },
                               style: ElevatedButton.styleFrom(

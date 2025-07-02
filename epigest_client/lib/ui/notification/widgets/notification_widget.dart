@@ -66,7 +66,6 @@ class _NotificationWidgetState extends State<NotificationWidget> {
             children: [
               FilledButton.icon(
                 onPressed: () {
-                  Routefly.push(routePaths.epi.epiRequest);
                 },
                 style: ElevatedButton.styleFrom(minimumSize: Size(80, 30), backgroundColor: widget.cor),
                 label: Text(

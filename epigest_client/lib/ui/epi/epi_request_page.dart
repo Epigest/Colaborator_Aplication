@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:epigest_client/ui/home/widgets/app_bar_widget.dart';
 import 'package:epigest_client/ui/epi/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:routefly/routefly.dart';
 
 enum RequestType { normal, urgente }
 
@@ -14,9 +15,12 @@ class EpiRequestPage extends StatefulWidget {
 
 class _EpiRequestPageState extends State<EpiRequestPage> {
   String _selectedChoice = '';
+  final epi = Routefly.query.arguments['epi'];
 
   @override
   Widget build(BuildContext context) {
+    final validade = epi['validade'] as Map<String, dynamic>;
+    
     return Scaffold(
       appBar: AppBarWidget(backButton: true),
       body: SafeArea(
@@ -38,7 +42,7 @@ class _EpiRequestPageState extends State<EpiRequestPage> {
                         ),
                       ),
                       child: Image.asset(
-                        'assets/imgs/epi.jpeg',
+                        '${epi['img']}',
                         width: 140,
                         height: 140,
                       ),
@@ -49,11 +53,11 @@ class _EpiRequestPageState extends State<EpiRequestPage> {
                         children: [
                           TextFieldWidget(
                             campo: 'Nome do EPI',
-                            value: 'Luva de Proteção para Construção Cívil',
+                            value: '${epi['nome']}',
                           ),
                           TextFieldWidget(
                             campo: 'Validade EPI',
-                            value: '18/08/2026',
+                            value: '${validade['data']}',
                           ),
                         ],
                       ),

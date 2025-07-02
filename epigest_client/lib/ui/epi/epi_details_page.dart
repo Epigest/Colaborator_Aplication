@@ -63,7 +63,10 @@ class _EpiDetailsPageState extends State<EpiDetailsPage> {
                         children: [
                           OutlinedButton.icon(
                             onPressed: () {
-                              Routefly.push(routePaths.epi.epiRequest);
+                              Routefly.pushNavigate(
+                                routePaths.epi.epiRequest,
+                                arguments: {'epi': epi},
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(150, 40),
