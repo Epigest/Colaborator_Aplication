@@ -2,17 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:routefly/routefly.dart';
 
 class CardDateWidget extends StatefulWidget {
-  const CardDateWidget({super.key});
+  const CardDateWidget({super.key, this.epi});
+
+  final epi;
 
   @override
   State<CardDateWidget> createState() => _CardDateWidgetState();
 }
 
 class _CardDateWidgetState extends State<CardDateWidget> {
-  int index = Routefly.query.arguments['index'] + 1 ?? 0;
-
   @override
   Widget build(BuildContext context) {
+    final validade = widget.epi['validade'] as Map<String, dynamic>;
+
+    Color _getStatusColor(String status) {
+      switch (status) {
+        case 'Vencido':
+          return Colors.red[100]!;
+        case 'Vencerá em breve':
+          return Colors.orange[100]!;
+        default:
+          return Colors.green[100]!;
+      }
+    }
+
+    IconData _getStatusIcon(String status) {
+      switch (status) {
+        case 'Vencido':
+          return Icons.error_outline;
+        case 'Vencerá em breve':
+          return Icons.warning_amber_rounded;
+        default:
+          return Icons.verified;
+      }
+    }
+
+    Color _getStatusIconColor(String status) {
+      switch (status) {
+        case 'Vencido':
+          return Colors.red;
+        case 'Vencerá em breve':
+          return Colors.orange;
+        default:
+          return Colors.green;
+      }
+    }
+
     return Card.filled(
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -30,49 +65,29 @@ class _CardDateWidgetState extends State<CardDateWidget> {
                       size: 22,
                     ),
                     Text(
-                      'Válido até: 18/08/2026',
+                      'Válido até: ${validade['data']}',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
                 ),
                 Card(
-                  color: index % 3 == 0
-                      ? index % 5 == 0
-                            ? Colors.red[100]
-                            : Colors.orange[100]
-                      : Colors.green[100],
+                  color: _getStatusColor(validade['status']),
                   child: Padding(
                     padding: const EdgeInsets.all(6),
                     child: Row(
                       spacing: 5,
                       children: [
                         Icon(
-                          index % 3 == 0
-                              ? index % 5 == 0
-                                    ? Icons.error_outline
-                                    : Icons.warning_amber_rounded
-                              : Icons.verified,
-                          color: index % 3 == 0
-                              ? index % 5 == 0
-                                    ? Colors.red
-                                    : Colors.orange
-                              : Colors.green,
+                          _getStatusIcon(validade['status']),
+                          color: _getStatusIconColor(validade['status']),
                           size: 15,
                         ),
                         Text(
-                          index % 3 == 0
-                              ? index % 5 == 0
-                                    ? 'Vencido'
-                                    : 'Vencerá em breve'
-                              : 'Em dia',
+                          validade['status'],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 10,
-                            color: index % 3 == 0
-                                ? index % 5 == 0
-                                      ? Colors.red
-                                      : Colors.orange
-                                : Colors.green,
+                            color: _getStatusIconColor(validade['status']),
                           ),
                         ),
                       ],
@@ -86,18 +101,10 @@ class _CardDateWidgetState extends State<CardDateWidget> {
                 Expanded(
                   child: LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(10),
-                    value: index % 3 == 0
-                        ? index % 5 == 0
-                              ? 0.15
-                              : 0.35
-                        : 0.85,
+                    value:validade['progresso'],
                     backgroundColor: Colors.white,
                     minHeight: 7,
-                    color: index % 3 == 0
-                        ? index % 5 == 0
-                              ? Colors.red
-                              : Colors.orange
-                        : Colors.green,
+                    color: widget.epi['cor'] as Color,
                   ),
                 ),
               ],

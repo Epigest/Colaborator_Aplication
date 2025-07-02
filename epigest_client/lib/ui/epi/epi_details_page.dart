@@ -15,10 +15,12 @@ class EpiDetailsPage extends StatefulWidget {
 }
 
 class _EpiDetailsPageState extends State<EpiDetailsPage> {
-  int index = Routefly.query.arguments['index'] + 1 ?? 0;
+  final epi = Routefly.query.arguments['epi'];
 
   @override
   Widget build(BuildContext context) {
+    final validade = epi['validade'] as Map<String, dynamic>;
+
     return Scaffold(
       appBar: AppBarWidget(backButton: true),
       body: SafeArea(
@@ -43,7 +45,7 @@ class _EpiDetailsPageState extends State<EpiDetailsPage> {
                           ),
                         ),
                         child: Image.asset(
-                          'assets/imgs/epi.jpeg',
+                          '${epi['img']}',
                           width: 210,
                           height: 210,
                         ),
@@ -59,18 +61,6 @@ class _EpiDetailsPageState extends State<EpiDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         spacing: 15,
                         children: [
-                          OutlinedButton.icon(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(150, 40),
-                              iconColor: Colors.blueAccent,
-                              foregroundColor: Colors.blueAccent,
-                            ),
-                            label: Text(
-                              'Ficha de EPI',
-                            ),
-                            icon: Icon(Icons.file_open_outlined),
-                          ),
                           OutlinedButton.icon(
                             onPressed: () {
                               Routefly.push(routePaths.epi.epiRequest);
@@ -100,21 +90,21 @@ class _EpiDetailsPageState extends State<EpiDetailsPage> {
                                   width: 90,
                                   child: TextFieldWidget(
                                     campo: 'CA',
-                                    value: '321568',
+                                    value: '${epi['ca']}',
                                   ),
                                 ),
                                 SizedBox(
                                   width: 120,
                                   child: TextFieldWidget(
                                     campo: 'Vencimento CA',
-                                    value: '14/07/2026',
+                                    value: '${validade['data']}',
                                   ),
                                 ),
                               ],
                             ),
                             TextFieldWidget(
                               campo: 'Nome do EPI',
-                              value: 'Luva de Proteção',
+                              value: '${epi['nome']}',
                             ),
                             Row(
                               spacing: 16,
@@ -123,7 +113,7 @@ class _EpiDetailsPageState extends State<EpiDetailsPage> {
                                   flex: 2,
                                   child: TextFieldWidget(
                                     campo: 'Fabricante',
-                                    value: 'Kalipso',
+                                    value: '${epi['modelo']}',
                                   ),
                                 ),
                                 Expanded(
@@ -155,7 +145,7 @@ class _EpiDetailsPageState extends State<EpiDetailsPage> {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 8),
-                child: SizedBox(height: 80, child: CardDateWidget()),
+                child: SizedBox(height: 80, child: CardDateWidget(epi: epi)),
               ),
             ),
           ],

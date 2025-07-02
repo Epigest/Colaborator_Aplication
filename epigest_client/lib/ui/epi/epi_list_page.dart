@@ -11,6 +11,107 @@ class EpiListPage extends StatefulWidget {
 }
 
 class _EpiListPageState extends State<EpiListPage> {
+  final epis = [
+    {
+      'ca': '25148',
+      'img': 'assets/imgs/epi1.jpeg',
+      'nome': 'Luva de Proteção',
+      'modelo': 'Kalipsu',
+      'data_entrega': '14/05/2025',
+      'cor': Colors.green,
+      'validade': {
+        'data': '18/08/2026',
+        'status': 'Em dia',
+        'progresso': 0.95,
+      },
+    },
+    {
+      'ca': '85472',
+      'img': 'assets/imgs/epi2.png',
+      'nome': 'Capacete',
+      'modelo': 'isvbsroyb',
+      'data_entrega': '20/01/2025',
+      'cor': Colors.red,
+      'validade': {
+        'data': '09/07/2025',
+        'status': 'Vencerá em breve',
+        'progresso': 0.05,
+      },
+    },
+    {
+      'ca': '57293',
+      'img': 'assets/imgs/epi3.jpg',
+      'nome': 'Protetor auricular plug',
+      'modelo': 'isvbsroyb',
+      'data_entrega': '16/06/2025',
+      'cor': Colors.green,
+      'validade': {
+        'data': '18/09/2025',
+        'status': 'Em dia',
+        'progresso': 0.75,
+      },
+    },
+    {
+      'ca': '81057',
+      'img': 'assets/imgs/epi4.jpg',
+      'nome': 'Luva Química',
+      'modelo': 'isvbsroyb',
+      'data_entrega': '25/06/2025',
+      'cor': Colors.green,
+      'validade': {
+        'data': '08/11/2025',
+        'status': 'Em dia',
+        'progresso': 0.85,
+      },
+    },
+    {
+      'ca': '71385',
+      'img': 'assets/imgs/epi5.jpg',
+      'nome': 'Botina de Segurança',
+      'modelo': 'isvbsroyb',
+      'data_entrega': '30/06/2025',
+      'cor': Colors.orange,
+      'validade': {
+        'data': '30/07/2025',
+        'status': 'Vencerá em breve',
+        'progresso': 0.35,
+      },
+    },
+  ];
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Vencido':
+        return Colors.red[100]!;
+      case 'Vencerá em breve':
+        return Colors.orange[100]!;
+      default:
+        return Colors.green[100]!;
+    }
+  }
+
+  IconData _getStatusIcon(String status) {
+    switch (status) {
+      case 'Vencido':
+        return Icons.error_outline;
+      case 'Vencerá em breve':
+        return Icons.warning_amber_rounded;
+      default:
+        return Icons.verified;
+    }
+  }
+
+  Color _getStatusIconColor(String status) {
+    switch (status) {
+      case 'Vencido':
+        return Colors.red;
+      case 'Vencerá em breve':
+        return Colors.orange;
+      default:
+        return Colors.green;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -54,10 +155,13 @@ class _EpiListPageState extends State<EpiListPage> {
             ],
           ),
           ListView.builder(
-            itemCount: 25,
+            itemCount: epis.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              final epi = epis[index];
+              final validade = epi['validade'] as Map<String, dynamic>;
+
               return Card.filled(
                 margin: EdgeInsets.symmetric(
                   horizontal: 10,
@@ -68,11 +172,7 @@ class _EpiListPageState extends State<EpiListPage> {
                   decoration: BoxDecoration(
                     border: Border(
                       left: BorderSide(
-                        color: index % 3 == 0
-                            ? index % 5 == 0
-                                  ? Colors.red
-                                  : Colors.orange
-                            : Colors.green,
+                        color: epis[index]['cor'] as Color,
                         width: 6,
                       ),
                     ),
@@ -81,9 +181,7 @@ class _EpiListPageState extends State<EpiListPage> {
                     onTap: () {
                       Routefly.pushNavigate(
                         routePaths.epi.epiDetails,
-                        arguments: {
-                          'index': index,
-                        },
+                        arguments: {'epi': epi},
                       );
                     },
                     child: Padding(
@@ -102,7 +200,7 @@ class _EpiListPageState extends State<EpiListPage> {
                                     size: 18,
                                   ),
                                   Text(
-                                    "Entregue em 14/05/2025",
+                                    "Entregue em ${epis[index]['data_entrega']}",
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
@@ -111,43 +209,23 @@ class _EpiListPageState extends State<EpiListPage> {
                                 ],
                               ),
                               Card(
-                                color: index % 3 == 0
-                                    ? index % 5 == 0
-                                          ? Colors.red[100]
-                                          : Colors.orange[100]
-                                    : Colors.green[100],
+                                color: _getStatusColor(validade['status']),
                                 child: Padding(
                                   padding: const EdgeInsets.all(6),
                                   child: Row(
                                     spacing: 5,
                                     children: [
                                       Icon(
-                                        index % 3 == 0
-                                            ? index % 5 == 0
-                                                  ? Icons.error_outline
-                                                  : Icons.warning_amber_rounded
-                                            : Icons.verified,
-                                        color: index % 3 == 0
-                                            ? index % 5 == 0
-                                                  ? Colors.red
-                                                  : Colors.orange
-                                            : Colors.green,
+                                        _getStatusIcon(validade['status']),
+                                        color:  _getStatusIconColor(validade['status']),
                                         size: 15,
                                       ),
                                       Text(
-                                        index % 3 == 0
-                                            ? index % 5 == 0
-                                                  ? 'Vencido'
-                                                  : 'Vencerá em breve'
-                                            : 'Em dia',
+                                        validade['status'],
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 10,
-                                          color: index % 3 == 0
-                                              ? index % 5 == 0
-                                                    ? Colors.red
-                                                    : Colors.orange
-                                              : Colors.green,
+                                          color: _getStatusIconColor(validade['status']),
                                         ),
                                       ),
                                     ],
@@ -164,7 +242,7 @@ class _EpiListPageState extends State<EpiListPage> {
                                 children: [
                                   Card(
                                     child: Image.asset(
-                                      'assets/imgs/epi.jpeg',
+                                      '${epi['img']}',
                                       width: 90,
                                       height: 90,
                                     ),
@@ -176,14 +254,14 @@ class _EpiListPageState extends State<EpiListPage> {
                                 spacing: 5,
                                 children: [
                                   Text(
-                                    'Luva de Proteção',
+                                    '${epi['nome']}',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    'Modelo: isvbsroyb',
+                                    'Modelo: ${epi['modelo']}',
                                     style: TextStyle(fontSize: 14),
                                   ),
                                 ],
@@ -201,7 +279,7 @@ class _EpiListPageState extends State<EpiListPage> {
                                     size: 18,
                                   ),
                                   Text(
-                                    'Válido até: 18/08/2026',
+                                    'Válido até: ${validade['data']}',
                                     style: TextStyle(fontSize: 13),
                                   ),
                                 ],
@@ -211,18 +289,10 @@ class _EpiListPageState extends State<EpiListPage> {
                                   Expanded(
                                     child: LinearProgressIndicator(
                                       borderRadius: BorderRadius.circular(10),
-                                      value: index % 3 == 0
-                                          ? index % 5 == 0
-                                                ? 0.15
-                                                : 0.35
-                                          : 0.85,
+                                      value: validade['progresso'],
                                       backgroundColor: Colors.white,
                                       minHeight: 7,
-                                      color: index % 3 == 0
-                                          ? index % 5 == 0
-                                                ? Colors.red
-                                                : Colors.orange
-                                          : Colors.green,
+                                      color: epi['cor'] as Color,
                                     ),
                                   ),
                                 ],

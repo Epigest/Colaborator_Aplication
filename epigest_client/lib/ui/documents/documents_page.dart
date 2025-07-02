@@ -25,25 +25,25 @@ class _DocumentsPageState extends State<DocumentsPage> {
                   nome: 'Atestado Médico',
                   dataRealizacao: DateTime(2024, 6, 1),
                   dataVencimento: DateTime(2025, 6, 1),
-                  pdfUrl: 'https://exemplo.com/anexo1.pdf',
+                  arquivo: 'assets/pdfs/Atestado Médico.pdf',
                 ),
                 Anexo(
                   nome: 'Certificados',
                   dataRealizacao: DateTime(2024, 6, 1),
                   dataVencimento: DateTime(2025, 6, 1),
-                  pdfUrl: 'https://exemplo.com/anexo1.pdf',
+                  arquivo: 'assets/pdfs/modelo_certificado_nr1.pdf',
                 ),
                 Anexo(
                   nome: 'Exames Ocupacionais',
                   dataRealizacao: DateTime(2024, 6, 1),
                   dataVencimento: DateTime(2025, 6, 1),
-                  pdfUrl: 'https://exemplo.com/anexo1.pdf',
+                  arquivo: 'assets/pdfs/Exame Ocupacional.pdf',
                 ),
               ];
               return DocumentsTopicsWidget(
                 icone: icons[index],
                 nomeDocumento: docs[index],
-                anexos: anexos,
+                anexo: anexos[index],
                 corPadrao: cores[index],
               );
             },
